@@ -7,7 +7,7 @@ public class Address {
 
     @Id
     @SequenceGenerator(name="address_address_iq_seq", sequenceName = "address_address_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_address_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_address_iq_seq")
     @Column(name="address_id")
     private Long id;
 

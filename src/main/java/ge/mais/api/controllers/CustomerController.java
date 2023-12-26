@@ -4,10 +4,7 @@ import ge.mais.api.dto.AddCustomer;
 import ge.mais.api.entities.Customer;
 import ge.mais.api.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +26,14 @@ public class CustomerController {
     public Customer add(@RequestBody AddCustomer addCustomer){
         return customerService.addCustomer(addCustomer);
     }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    public Boolean delete(@PathVariable Long id){
+        return customerService.deleteCustomer(id);
+    }
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT, produces = {"application/json"})
+    public Customer edit(@RequestBody AddCustomer addCustomer, @PathVariable Long id){
+        return customerService.addEditCustomer(addCustomer, id);
+    }
+
 }

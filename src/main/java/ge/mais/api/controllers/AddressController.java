@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/address")
 public class AddressController {
     private final AddressService addressService;
 
@@ -18,7 +18,7 @@ public class AddressController {
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
-@RequestMapping(value="/all", method = RequestMethod.GET, produces = {"application/json"})
+    @RequestMapping(value="/all", method = RequestMethod.GET, produces = {"application/json"})
     public List<Address> getAll(){
         return addressService.getAll();
     }
