@@ -15,7 +15,7 @@ public class TestController {
 
     @RequestMapping(value = "/person", method = RequestMethod.POST, produces = {"application/json"})
     public TestPerson testPost(@RequestBody TestPerson testPerson){
-        testPerson.setFirstName(testPerson.getFirstName() + "from server");
+        testPerson.setFirstName(testPerson.getFirstName()    + "from server");
         return testPerson;
     };
 
