@@ -17,6 +17,17 @@ public class Customer {
     @Column(name="first_name")
     private String firstName;
 
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
+    }
+
+    @Column(name="active")
+    private Integer active;
+
     @Column(name="last_name")
     private String lastName;
 

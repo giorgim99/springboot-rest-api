@@ -1,11 +1,14 @@
 package ge.mais.api.services;
 
 import ge.mais.api.dto.AddCustomer;
+import ge.mais.api.dto.SearchCustomer;
 import ge.mais.api.entities.Address;
 import ge.mais.api.entities.Customer;
 import ge.mais.api.repositories.CustomerRepository;
+import ge.mais.api.util.GeneralUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,14 +31,13 @@ public class CustomerService {
         return customerRepository.findAll();
     }
     public Customer getById(Long id){
-        return customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Customer Not Found"));
+        return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer Not Found"));
     }
 
     @Transactional
-    public Customer addCustomer(AddCustomer addCustomer){
+    public Customer addCustomer(AddCustomer addCustomer) throws Exception {
         Customer customer = new Customer();
-        customer.setFirstName(addCustomer.getFirstName());
-        customer.setLastName(addCustomer.getLastName());
+        GeneralUtil.getCopyOf(addCustomer, customer);
         customer.setCreateDate(new Date());
         Address address = addressService.getAddress(addCustomer.getAddress());
         customer.setAddress(address);
@@ -61,6 +63,10 @@ public class CustomerService {
         Customer customer = getById(id);
         customerRepository.delete(customer);
         return true;
+    }
+    public List<Customer> search(SearchCustomer searchCustomer){
+        String searchText = searchCustomer.getSearchText() != null ? "%" + searchCustomer.getSearchText() + "%" : "";
+        return customerRepository.search(searchCustomer.getActive(), searchText);
     }
 }
 
