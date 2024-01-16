@@ -1,12 +1,14 @@
 package ge.mais.api.controllers;
 
 import ge.mais.api.dto.AddCustomer;
+import ge.mais.api.dto.RequestData;
 import ge.mais.api.dto.SearchCustomer;
 import ge.mais.api.entities.Customer;
 import ge.mais.api.services.CustomerService;
 import ge.mais.api.util.GeneralUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.MergedAnnotations;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -46,8 +48,8 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST, produces = {"application/json"})
-    public List<Customer> search(@RequestBody SearchCustomer searchCustomer) throws Exception {
-        GeneralUtil.checkRequiredProperties(searchCustomer, Arrays.asList("active", "searchText"));
-        return customerService.search(searchCustomer);
+    public Page<Customer> search(@RequestBody RequestData<SearchCustomer> rd) throws Exception {
+        GeneralUtil.checkRequiredProperties(rd.getData(), Arrays.asList("active", "searchText"));
+        return customerService.search(rd.getData(), rd.getPaging());
     }
 }

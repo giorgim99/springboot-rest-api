@@ -1,6 +1,7 @@
 package ge.mais.api.services;
 
 import ge.mais.api.dto.AddCustomer;
+import ge.mais.api.dto.Paging;
 import ge.mais.api.dto.SearchCustomer;
 import ge.mais.api.entities.Address;
 import ge.mais.api.entities.Customer;
@@ -8,6 +9,10 @@ import ge.mais.api.repositories.CustomerRepository;
 import ge.mais.api.util.GeneralUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -64,9 +69,13 @@ public class CustomerService {
         customerRepository.delete(customer);
         return true;
     }
-    public List<Customer> search(SearchCustomer searchCustomer){
+    public Page<Customer> search(SearchCustomer searchCustomer, Paging paging){
         String searchText = searchCustomer.getSearchText() != null ? "%" + searchCustomer.getSearchText() + "%" : "";
-        return customerRepository.search(searchCustomer.getActive(), searchText);
+//        Pageable pageable = PageRequest.of(paging.getPage() - 1, paging.getSize(), Sort.by("id").ascending());
+//        return customerRepository.search(searchCustomer.getActive(), searchText, pageable);
+        Pageable pageable = PageRequest.of(paging.getPage() - 1, paging.getSize(), Sort.by("id").ascending());
+        return customerRepository.search(searchCustomer.getActive(), searchText, pageable);
+
     }
 }
 
