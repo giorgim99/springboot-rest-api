@@ -15,6 +15,9 @@ public class Address {
     private String address;
     @Column(name="postal_code")
     private String postalCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="city_id")
+    private City city;
 
     public Long getId() {
         return id;

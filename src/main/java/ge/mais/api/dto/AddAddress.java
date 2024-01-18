@@ -1,13 +1,21 @@
 package ge.mais.api.dto;
 
+import ge.mais.api.entities.City;
 import ge.mais.api.entities.Customer;
 
 import java.util.Date;
 
 public class AddAddress {
+    public City city;
     private String address;
     private String postalCode;
 
+    public City getCity() {
+        return city;
+    }
+    public void setCity(City city) {
+        this.city = city;
+    }
     public String getAddress() {
         return address;
     }

@@ -17,8 +17,6 @@ public class Customer {
     @Column(name="first_name")
     private String firstName;
 
-
-
     @Column(name="active")
     private Integer active;
 
